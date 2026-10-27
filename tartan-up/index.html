@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#b9152b">
+  <meta name="description" content="Tartan Up — a student concept for showing up, cheering loud, and earning rewards at CMU games.">
+  <title>Tartan Up · Make showing up count</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="./vendor/qrcode.js"></script>
+  <script type="module" src="./js/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <aside class="sidebar">
+    <a href="#home" class="brand" aria-label="Tartan Up home"><span class="brand-mark">T<span>↗</span></span><span>TARTAN<span class="brand-up">UP</span><small>MAKE SHOWING UP COUNT.</small></span></a>
+    <div class="sidebar-label">YOUR CAMPUS. YOUR TEAM.</div>
+    <nav id="desktop-nav" aria-label="Main navigation"></nav>
+    <div class="sidebar-bottom"><div class="spirit-card tartan"><span class="tiny">BUILT FOR THE STANDS</span><p>More cheers.<br>More community.</p><span class="spirit-arrow">↗</span></div><a class="staff-link" href="#athletics">Athletics demo <span>↗</span></a><p class="sidebar-foot">A CMU student project.<br>Not an official university service.</p></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><a class="mobile-brand" href="#home">TARTAN<span>UP</span><b>↗</b></a><div class="breadcrumb">CARNEGIE MELLON <span>/</span> <strong id="page-label">The student section</strong></div><div class="topbar-actions"><span class="demo-pill"><span></span> CLASS DEMO</span><button id="guest-button" class="guest-button" data-action="guest">Try as a student <span>↗</span></button></div></header>
+    <main id="main-content" tabindex="-1"></main>
+    <footer class="page-footer"><span>TARTAN UP <b>↗</b> <span>Made for a louder campus.</span></span><a class="text-button" href="#athletics">Athletics demo ↗</a><button class="text-button" data-action="reset">Reset demo</button></footer>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation"></nav>
+  <dialog id="modal" aria-labelledby="modal-title"><div id="modal-content"></div></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <noscript><div class="no-script">Enable JavaScript to try the interactive Tartan Up demo.</div></noscript>
+</body>
+</html>
