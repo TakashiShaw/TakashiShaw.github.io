@@ -1,3 +1,5 @@
+import { refreshScore, overlapsCar, isTileBlocked } from './game-logic.mjs';
+
 // ============================================================
 //  CONFIGURATION
 // ============================================================
@@ -452,14 +454,6 @@ const score = {
   bestRow: PLAYER_START_ROW,   // most-forward (lowest) row ever reached
 };
 
-function refreshScore() {
-  if (player.row < score.bestRow) {
-    score.bestRow = player.row;
-    score.val     = PLAYER_START_ROW - score.bestRow;
-    if (score.val > score.best) score.best = score.val;
-  }
-}
-
 // ============================================================
 //  GAME STATE
 // ============================================================
@@ -506,15 +500,6 @@ function resetGame() {
   state = 'playing';
 }
 
-// Returns true if a given world tile is occupied by a blocking scenery object.
-// Road tiles are never blocked by scenery (cars handle their own collision).
-// Called before committing player movement so the hop never starts into a wall.
-function isTileBlocked(worldRow, col) {
-  const lane = getLane(worldRow);
-  if (lane.type !== 'grass') return false;
-  return lane.scenery.some(s => s.blocked && s.col === col);
-}
-
 // ============================================================
 //  INPUT
 // ============================================================
@@ -549,7 +534,7 @@ function handleKey(e) {
   if (newCol < 0 || newCol >= COLS) return;
 
   // Block movement into a tile occupied by scenery (tree, bush, rock)
-  if (isTileBlocked(newRow, newCol)) return;
+  if (isTileBlocked(getLane(newRow), newCol)) return;
 
   // Record hop start
   const destinationLane = getLane(newRow);
@@ -574,7 +559,7 @@ function handleKey(e) {
   player.row = newRow;
   player.col = newCol;
 
-  refreshScore();
+  refreshScore(score, player.row, PLAYER_START_ROW);
 }
 
 // ============================================================
@@ -689,23 +674,10 @@ function checkCollision() {
   }
   if (lane.type !== 'road') return;
 
-  const hs   = (CONFIG.tileSize * CONFIG.playerHitbox) / 2;
-  const px1  = player.px - hs;
-  const px2  = player.px + hs;
-  const py1  = player.py - hs;
-  const py2  = player.py + hs;
-
   const laneY = rowToScreenY(player.row);
 
   for (const car of lane.cars) {
-    const cy     = laneY + (CONFIG.tileSize - car.h) / 2;
-    const shrink = car.h * (1 - CONFIG.carHitbox) / 2;
-    const cx1    = car.x;
-    const cx2    = car.x + car.w;
-    const cy1    = cy + shrink;
-    const cy2    = cy + car.h - shrink;
-
-    if (px2 > cx1 && px1 < cx2 && py2 > cy1 && py1 < cy2) {
+    if (overlapsCar(player, car, laneY, CONFIG)) {
       beginDeath('car');
       return;
     }
