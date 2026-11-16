@@ -30,5 +30,5 @@ export function overlapsCar(player, car, laneY, config) {
 // Returns whether a grass lane has blocking scenery at the given column.
 export function isTileBlocked(lane, col) {
   if (lane.type !== 'grass') return false;
-  return lane.scenery.some(s => s.blocked && s.col === col);
+  return lane.scenery.some(s => s.col === col);
 }
